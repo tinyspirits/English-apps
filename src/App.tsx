@@ -319,6 +319,26 @@ const phraseMatches = [
   },
 ]
 
+// ─── Drag-and-Drop Exercise Data ─────────────────────────────────────────────
+
+type DragWord = { id: string; word: string; sentence: string; answer: string }
+type DropZone = { id: string; label: string; color: string }
+
+const dragWords: DragWord[] = [
+  { id: 'dw1', word: 'Cooking', sentence: '_____ is my favourite hobby.', answer: 'subject' },
+  { id: 'dw2', word: 'swimming', sentence: 'She loves _____.', answer: 'after-verb' },
+  { id: 'dw3', word: 'arriving', sentence: 'After _____, we checked in immediately.', answer: 'after-prep' },
+  { id: 'dw4', word: 'Singing', sentence: '_____ loudly fills the room with joy.', answer: 'subject' },
+  { id: 'dw5', word: 'writing', sentence: 'He finished _____ the report.', answer: 'after-verb' },
+  { id: 'dw6', word: 'studying', sentence: 'She improved by _____ every morning.', answer: 'after-prep' },
+]
+
+const dropZones: DropZone[] = [
+  { id: 'subject', label: 'Gerund as Subject', color: 'blue' },
+  { id: 'after-verb', label: 'Gerund after a Verb', color: 'green' },
+  { id: 'after-prep', label: 'Gerund after a Preposition', color: 'orange' },
+]
+
 const exercises = [
   {
     id: 1,
@@ -351,6 +371,12 @@ function App() {
   const [activePos, setActivePos] = useState(posCategories[0].pos)
   const [activeConnector, setActiveConnector] = useState(0)
 
+  // Drag-and-drop state
+  const [dragPlacements, setDragPlacements] = useState<Record<string, string>>({})
+  const [showDragResults, setShowDragResults] = useState(false)
+  const [draggingId, setDraggingId] = useState<string | null>(null)
+  const [dragOverZoneId, setDragOverZoneId] = useState<string | null>(null)
+
   const activePosData = posCategories.find((c) => c.pos === activePos) ?? posCategories[0]
   const activeConnectorData = connectorPairs[activeConnector]
 
@@ -361,6 +387,62 @@ function App() {
       }, 0),
     [answers],
   )
+
+  const dragScore = useMemo(
+    () => dragWords.filter((w) => dragPlacements[w.id] === w.answer).length,
+    [dragPlacements],
+  )
+  const allPlaced = dragWords.every((w) => dragPlacements[w.id])
+
+  function handleDragStart(e: React.DragEvent, id: string) {
+    e.dataTransfer.setData('wordId', id)
+    setDraggingId(id)
+  }
+
+  function handleDragEnd() {
+    setDraggingId(null)
+    setDragOverZoneId(null)
+  }
+
+  function handleZoneDragOver(e: React.DragEvent, zoneId: string) {
+    e.preventDefault()
+    setDragOverZoneId(zoneId)
+  }
+
+  function handleZoneDragLeave() {
+    setDragOverZoneId(null)
+  }
+
+  function handleZoneDrop(e: React.DragEvent, zoneId: string) {
+    e.preventDefault()
+    const wordId = e.dataTransfer.getData('wordId')
+    if (wordId) {
+      setDragPlacements((p) => ({ ...p, [wordId]: zoneId }))
+      setShowDragResults(false)
+    }
+    setDragOverZoneId(null)
+    setDraggingId(null)
+  }
+
+  function handleBankDrop(e: React.DragEvent) {
+    e.preventDefault()
+    const wordId = e.dataTransfer.getData('wordId')
+    if (wordId) {
+      setDragPlacements((p) => {
+        const next = { ...p }
+        delete next[wordId]
+        return next
+      })
+      setShowDragResults(false)
+    }
+    setDragOverZoneId(null)
+    setDraggingId(null)
+  }
+
+  function handleDragReset() {
+    setDragPlacements({})
+    setShowDragResults(false)
+  }
 
   return (
     <main className="app-shell">
@@ -442,7 +524,105 @@ function App() {
       <section className="panel">
         <div className="section-heading exercise-header">
           <div>
-            <p className="eyebrow">4. Exercises</p>
+            <p className="eyebrow">4. Drag &amp; Drop</p>
+            <h2>Sort each gerund into the correct category.</h2>
+          </div>
+          {showDragResults && (
+            <p className="score">
+              Score: {dragScore}/{dragWords.length}
+            </p>
+          )}
+        </div>
+
+        {/* Word bank */}
+        <div
+          className={`drag-bank${dragOverZoneId === 'bank' ? ' drag-over' : ''}`}
+          onDragOver={(e) => { e.preventDefault(); setDragOverZoneId('bank') }}
+          onDragLeave={handleZoneDragLeave}
+          onDrop={handleBankDrop}
+        >
+          <p className="drag-bank-label">Word Bank — drag words to the categories below</p>
+          <div className="drag-chips">
+            {dragWords
+              .filter((w) => !dragPlacements[w.id])
+              .map((w) => (
+                <div
+                  key={w.id}
+                  className={`drag-chip${draggingId === w.id ? ' dragging' : ''}`}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, w.id)}
+                  onDragEnd={handleDragEnd}
+                >
+                  <span className="drag-chip-word">{w.word}</span>
+                  <span className="drag-chip-sentence">{w.sentence}</span>
+                </div>
+              ))}
+            {allPlaced && (
+              <p className="drag-bank-empty">All words placed — check your answers below.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Drop zones */}
+        <div className="drop-zones">
+          {dropZones.map((zone) => (
+            <div
+              key={zone.id}
+              className={`drop-zone drop-zone--${zone.color}${dragOverZoneId === zone.id ? ' drag-over' : ''}`}
+              onDragOver={(e) => handleZoneDragOver(e, zone.id)}
+              onDragLeave={handleZoneDragLeave}
+              onDrop={(e) => handleZoneDrop(e, zone.id)}
+            >
+              <p className="drop-zone-label">{zone.label}</p>
+              <div className="drag-chips">
+                {dragWords
+                  .filter((w) => dragPlacements[w.id] === zone.id)
+                  .map((w) => {
+                    const isCorrect = w.answer === zone.id
+                    return (
+                      <div
+                        key={w.id}
+                        className={`drag-chip${draggingId === w.id ? ' dragging' : ''}${
+                          showDragResults ? (isCorrect ? ' correct-chip' : ' incorrect-chip') : ''
+                        }`}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, w.id)}
+                        onDragEnd={handleDragEnd}
+                      >
+                        <span className="drag-chip-word">{w.word}</span>
+                        <span className="drag-chip-sentence">{w.sentence}</span>
+                      </div>
+                    )
+                  })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Action buttons */}
+        <div className="drag-actions">
+          <button
+            type="button"
+            className="drag-btn drag-btn--primary"
+            onClick={() => setShowDragResults(true)}
+            disabled={!allPlaced}
+          >
+            Check Answers
+          </button>
+          <button
+            type="button"
+            className="drag-btn drag-btn--secondary"
+            onClick={handleDragReset}
+          >
+            Reset
+          </button>
+        </div>
+      </section>
+
+      <section className="panel">
+        <div className="section-heading exercise-header">
+          <div>
+            <p className="eyebrow">5. Exercises</p>
             <h2>Check your understanding.</h2>
           </div>
           <p className="score">
@@ -491,7 +671,7 @@ function App() {
       <section className="panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">5. Word classification</p>
+            <p className="eyebrow">6. Word classification</p>
             <h2>Browse the main parts of speech and their sub-types.</h2>
           </div>
         </div>
@@ -525,7 +705,7 @@ function App() {
       <section className="panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">6. Connectors &amp; linking words</p>
+            <p className="eyebrow">7. Connectors &amp; linking words</p>
             <h2>Know when to use which connector and why.</h2>
           </div>
         </div>
