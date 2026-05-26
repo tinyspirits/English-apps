@@ -245,6 +245,188 @@ const connectorPairs: ConnectorPair[] = [
   },
 ]
 
+// ─── Tense Data ──────────────────────────────────────────────────────────────
+
+type TenseEntry = { name: string; formula: string; use: string; signal: string; examples: string[] }
+type TenseGroup = { group: string; color: string; tenses: TenseEntry[] }
+
+const tenseGroups: TenseGroup[] = [
+  {
+    group: 'Present',
+    color: 'blue',
+    tenses: [
+      {
+        name: 'Present Simple',
+        formula: 'S + V(s/es) / S + do/does not + V',
+        use: 'Habits, routines, general truths, and permanent facts.',
+        signal: 'always, usually, often, every day, never, sometimes',
+        examples: ['She reads every morning.', 'Water boils at 100 °C.', 'They do not work on Sundays.'],
+      },
+      {
+        name: 'Present Continuous',
+        formula: 'S + am/is/are + V-ing',
+        use: 'Actions happening right now or temporary situations around the present.',
+        signal: 'now, at the moment, currently, today, look!, listen!',
+        examples: ['He is reading a book right now.', 'They are working on a project this week.'],
+      },
+      {
+        name: 'Present Perfect',
+        formula: 'S + have/has + past participle',
+        use: 'Past actions with a connection to the present; life experiences.',
+        signal: 'just, already, yet, ever, never, since, for, recently',
+        examples: ['I have just finished my homework.', 'She has lived here since 2018.', 'Have you ever tried sushi?'],
+      },
+      {
+        name: 'Present Perfect Continuous',
+        formula: 'S + have/has + been + V-ing',
+        use: 'An action that started in the past and is still ongoing (or just stopped).',
+        signal: 'for, since, all day, how long, lately',
+        examples: ['They have been studying for three hours.', 'It has been raining since this morning.'],
+      },
+    ],
+  },
+  {
+    group: 'Past',
+    color: 'orange',
+    tenses: [
+      {
+        name: 'Past Simple',
+        formula: 'S + V-ed (or irregular form) / S + did not + V',
+        use: 'Completed actions at a specific time in the past.',
+        signal: 'yesterday, last week, in 2010, ago, when, then',
+        examples: ['She visited Paris last summer.', 'We did not see the film.', 'He wrote three emails yesterday.'],
+      },
+      {
+        name: 'Past Continuous',
+        formula: 'S + was/were + V-ing',
+        use: 'Actions in progress at a specific moment in the past; background for another action.',
+        signal: 'at 8 pm yesterday, while, when (as interruption context)',
+        examples: ['I was cooking when the phone rang.', 'They were playing football at 5 pm.'],
+      },
+      {
+        name: 'Past Perfect',
+        formula: 'S + had + past participle',
+        use: 'An action completed before another past action (the "earlier past").',
+        signal: 'before, after, by the time, already, when, as soon as',
+        examples: ['She had left before I arrived.', 'He had already eaten when we called.'],
+      },
+      {
+        name: 'Past Perfect Continuous',
+        formula: 'S + had + been + V-ing',
+        use: 'An ongoing action that was in progress up to a past moment.',
+        signal: 'for, since, before, when, by the time',
+        examples: ['They had been waiting for two hours when the bus finally arrived.', 'She had been working all night before she collapsed.'],
+      },
+    ],
+  },
+  {
+    group: 'Future',
+    color: 'green',
+    tenses: [
+      {
+        name: 'Future Simple (will)',
+        formula: 'S + will + V',
+        use: 'Spontaneous decisions, promises, predictions, or offers.',
+        signal: 'tomorrow, next week, in the future, I think, probably, maybe',
+        examples: ['I will call you tomorrow.', 'It will rain this weekend.', 'I will help you move the boxes.'],
+      },
+      {
+        name: 'be going to',
+        formula: 'S + am/is/are + going to + V',
+        use: 'Plans decided before speaking; predictions based on present evidence.',
+        signal: 'tonight, this weekend, soon (with a plan or visible evidence)',
+        examples: ['She is going to study medicine next year.', 'Look at those clouds — it is going to rain.'],
+      },
+      {
+        name: 'Future Continuous',
+        formula: 'S + will + be + V-ing',
+        use: 'An action that will be in progress at a specific future moment.',
+        signal: 'at this time tomorrow, at 9 am next Monday, this time next week',
+        examples: ['This time tomorrow, I will be flying to Tokyo.', 'She will be working late on Friday night.'],
+      },
+      {
+        name: 'Future Perfect',
+        formula: 'S + will + have + past participle',
+        use: 'An action that will be completed before a specific future point in time.',
+        signal: 'by tomorrow, by the end of, before, by the time',
+        examples: ['I will have finished the report by Friday.', 'They will have left by the time you arrive.'],
+      },
+    ],
+  },
+]
+
+// ─── Tense Classification Exercises ──────────────────────────────────────────
+
+type TenseQuiz = { id: number; sentence: string; highlight: string; options: string[]; answer: string; explanation: string }
+
+const tenseQuizzes: TenseQuiz[] = [
+  {
+    id: 1,
+    sentence: 'She has been living in Hanoi for ten years.',
+    highlight: 'has been living',
+    options: ['Present Perfect', 'Present Perfect Continuous', 'Past Continuous', 'Present Continuous'],
+    answer: 'Present Perfect Continuous',
+    explanation: 'have/has + been + V-ing → Present Perfect Continuous. The signal "for ten years" confirms a duration still in progress.',
+  },
+  {
+    id: 2,
+    sentence: 'By the time we arrived, the concert had already started.',
+    highlight: 'had already started',
+    options: ['Past Simple', 'Past Continuous', 'Past Perfect', 'Future Perfect'],
+    answer: 'Past Perfect',
+    explanation: 'had + past participle (started) = Past Perfect. It shows the concert finished before another past action (we arrived).',
+  },
+  {
+    id: 3,
+    sentence: 'I will have finished this project by next Monday.',
+    highlight: 'will have finished',
+    options: ['Future Simple', 'Future Continuous', 'Future Perfect', 'Present Perfect'],
+    answer: 'Future Perfect',
+    explanation: 'will + have + past participle = Future Perfect. "By next Monday" confirms completion before a future point.',
+  },
+  {
+    id: 4,
+    sentence: 'Look! It is snowing outside.',
+    highlight: 'is snowing',
+    options: ['Present Simple', 'Present Continuous', 'Past Continuous', 'Present Perfect'],
+    answer: 'Present Continuous',
+    explanation: 'am/is/are + V-ing = Present Continuous. "Look!" signals the action is happening right now.',
+  },
+  {
+    id: 5,
+    sentence: 'They played basketball every afternoon last year.',
+    highlight: 'played',
+    options: ['Present Simple', 'Past Simple', 'Past Continuous', 'Past Perfect'],
+    answer: 'Past Simple',
+    explanation: 'Verb in past form (played) with the time signal "last year" shows a completed past routine.',
+  },
+]
+
+// ─── Word Classification Drag-and-Drop ───────────────────────────────────────
+
+type WcDragWord = { id: string; word: string; answer: 'noun' | 'verb' | 'adjective' }
+
+const wcDragWords: WcDragWord[] = [
+  { id: 'wc1', word: 'happiness', answer: 'noun' },
+  { id: 'wc2', word: 'run', answer: 'verb' },
+  { id: 'wc3', word: 'beautiful', answer: 'adjective' },
+  { id: 'wc4', word: 'teacher', answer: 'noun' },
+  { id: 'wc5', word: 'decide', answer: 'verb' },
+  { id: 'wc6', word: 'quick', answer: 'adjective' },
+  { id: 'wc7', word: 'freedom', answer: 'noun' },
+  { id: 'wc8', word: 'create', answer: 'verb' },
+  { id: 'wc9', word: 'enormous', answer: 'adjective' },
+  { id: 'wc10', word: 'knowledge', answer: 'noun' },
+  { id: 'wc11', word: 'suggest', answer: 'verb' },
+  { id: 'wc12', word: 'confident', answer: 'adjective' },
+]
+
+const wcDropZones: DropZone[] = [
+  { id: 'noun', label: 'Noun', color: 'blue' },
+  { id: 'verb', label: 'Verb', color: 'green' },
+  { id: 'adjective', label: 'Adjective', color: 'orange' },
+]
+
 const classifications = [
   {
     title: 'Gerund as the subject',
@@ -371,11 +553,23 @@ function App() {
   const [activePos, setActivePos] = useState(posCategories[0].pos)
   const [activeConnector, setActiveConnector] = useState(0)
 
-  // Drag-and-drop state
+  // Drag-and-drop state (gerunds)
   const [dragPlacements, setDragPlacements] = useState<Record<string, string>>({})
   const [showDragResults, setShowDragResults] = useState(false)
   const [draggingId, setDraggingId] = useState<string | null>(null)
   const [dragOverZoneId, setDragOverZoneId] = useState<string | null>(null)
+
+  // Tense lesson state
+  const [activeTenseGroup, setActiveTenseGroup] = useState(tenseGroups[0].group)
+
+  // Tense classification quiz state
+  const [tenseAnswers, setTenseAnswers] = useState<Record<number, string>>({})
+
+  // Word classification drag-and-drop state
+  const [wcPlacements, setWcPlacements] = useState<Record<string, string>>({})
+  const [showWcResults, setShowWcResults] = useState(false)
+  const [draggingWcId, setDraggingWcId] = useState<string | null>(null)
+  const [wcDragOverZoneId, setWcDragOverZoneId] = useState<string | null>(null)
 
   const activePosData = posCategories.find((c) => c.pos === activePos) ?? posCategories[0]
   const activeConnectorData = connectorPairs[activeConnector]
@@ -442,6 +636,69 @@ function App() {
   function handleDragReset() {
     setDragPlacements({})
     setShowDragResults(false)
+  }
+
+  // Tense quiz score
+  const tenseScore = useMemo(
+    () => tenseQuizzes.reduce((total, q) => total + Number(tenseAnswers[q.id] === q.answer), 0),
+    [tenseAnswers],
+  )
+
+  // Word-classification drag helpers
+  const wcScore = useMemo(
+    () => wcDragWords.filter((w) => wcPlacements[w.id] === w.answer).length,
+    [wcPlacements],
+  )
+  const allWcPlaced = wcDragWords.every((w) => wcPlacements[w.id])
+
+  function handleWcDragStart(e: React.DragEvent, id: string) {
+    e.dataTransfer.setData('wcWordId', id)
+    setDraggingWcId(id)
+  }
+
+  function handleWcDragEnd() {
+    setDraggingWcId(null)
+    setWcDragOverZoneId(null)
+  }
+
+  function handleWcZoneDragOver(e: React.DragEvent, zoneId: string) {
+    e.preventDefault()
+    setWcDragOverZoneId(zoneId)
+  }
+
+  function handleWcZoneDragLeave() {
+    setWcDragOverZoneId(null)
+  }
+
+  function handleWcZoneDrop(e: React.DragEvent, zoneId: string) {
+    e.preventDefault()
+    const wordId = e.dataTransfer.getData('wcWordId')
+    if (wordId) {
+      setWcPlacements((p) => ({ ...p, [wordId]: zoneId }))
+      setShowWcResults(false)
+    }
+    setWcDragOverZoneId(null)
+    setDraggingWcId(null)
+  }
+
+  function handleWcBankDrop(e: React.DragEvent) {
+    e.preventDefault()
+    const wordId = e.dataTransfer.getData('wcWordId')
+    if (wordId) {
+      setWcPlacements((p) => {
+        const next = { ...p }
+        delete next[wordId]
+        return next
+      })
+      setShowWcResults(false)
+    }
+    setWcDragOverZoneId(null)
+    setDraggingWcId(null)
+  }
+
+  function handleWcReset() {
+    setWcPlacements({})
+    setShowWcResults(false)
   }
 
   return (
@@ -740,6 +997,193 @@ function App() {
               </ul>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* ── Section 8: Tense Lessons ─────────────────────────────────────────── */}
+      <section className="panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">8. Tenses</p>
+            <h2>Learn and classify all major English tenses.</h2>
+          </div>
+        </div>
+        <div className="pos-tabs">
+          {tenseGroups.map((g) => (
+            <button
+              key={g.group}
+              type="button"
+              className={`pos-tab pos-tab--${g.color} ${activeTenseGroup === g.group ? 'pos-tab--active' : ''}`}
+              onClick={() => setActiveTenseGroup(g.group)}
+            >
+              {g.group}
+            </button>
+          ))}
+        </div>
+        <div className="card-grid tense-grid">
+          {(tenseGroups.find((g) => g.group === activeTenseGroup) ?? tenseGroups[0]).tenses.map((t) => (
+            <article className="card tense-card" key={t.name}>
+              <h3>{t.name}</h3>
+              <p className="tense-formula">
+                <strong>Formula:</strong> {t.formula}
+              </p>
+              <p className="tense-use">{t.use}</p>
+              <p className="tense-signal">
+                <span className="tense-signal-label">Signals:</span> {t.signal}
+              </p>
+              <ul className="example-list">
+                {t.examples.map((ex) => (
+                  <li key={ex}>{ex}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Section 9: Tense Classification Quiz ─────────────────────────────── */}
+      <section className="panel">
+        <div className="section-heading exercise-header">
+          <div>
+            <p className="eyebrow">9. Tense classification</p>
+            <h2>Identify the tense used in each sentence.</h2>
+          </div>
+          <p className="score">
+            Score: {tenseScore}/{tenseQuizzes.length}
+          </p>
+        </div>
+        <div className="exercise-list">
+          {tenseQuizzes.map((q) => {
+            const selected = tenseAnswers[q.id]
+            const isCorrect = selected === q.answer
+            const parts = q.sentence.split(q.highlight)
+            return (
+              <article className="card exercise-card" key={q.id}>
+                <h3>
+                  {parts[0]}
+                  <mark className="tense-highlight">{q.highlight}</mark>
+                  {parts[1]}
+                </h3>
+                <div className="options">
+                  {q.options.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      className={`option ${selected === opt ? 'selected' : ''}`}
+                      onClick={() => setTenseAnswers((cur) => ({ ...cur, [q.id]: opt }))}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {selected ? (
+                  <p className={`feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
+                    {isCorrect ? 'Correct.' : `Try again. Correct answer: ${q.answer}.`}{' '}
+                    {q.explanation}
+                  </p>
+                ) : (
+                  <p className="feedback">Select the tense to reveal the explanation.</p>
+                )}
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* ── Section 10: Word Classification Drag & Drop ───────────────────────── */}
+      <section className="panel">
+        <div className="section-heading exercise-header">
+          <div>
+            <p className="eyebrow">10. Word classification</p>
+            <h2>Sort each word into the correct part-of-speech category.</h2>
+          </div>
+          {showWcResults && (
+            <p className="score">
+              Score: {wcScore}/{wcDragWords.length}
+            </p>
+          )}
+        </div>
+
+        {/* Word bank */}
+        <div
+          className={`drag-bank${wcDragOverZoneId === 'wc-bank' ? ' drag-over' : ''}`}
+          onDragOver={(e) => { e.preventDefault(); setWcDragOverZoneId('wc-bank') }}
+          onDragLeave={handleWcZoneDragLeave}
+          onDrop={handleWcBankDrop}
+        >
+          <p className="drag-bank-label">Word Bank — drag words to the categories below</p>
+          <div className="drag-chips">
+            {wcDragWords
+              .filter((w) => !wcPlacements[w.id])
+              .map((w) => (
+                <div
+                  key={w.id}
+                  className={`drag-chip wc-chip${draggingWcId === w.id ? ' dragging' : ''}`}
+                  draggable
+                  onDragStart={(e) => handleWcDragStart(e, w.id)}
+                  onDragEnd={handleWcDragEnd}
+                >
+                  <span className="drag-chip-word">{w.word}</span>
+                </div>
+              ))}
+            {allWcPlaced && (
+              <p className="drag-bank-empty">All words placed — check your answers below.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Drop zones */}
+        <div className="drop-zones">
+          {wcDropZones.map((zone) => (
+            <div
+              key={zone.id}
+              className={`drop-zone drop-zone--${zone.color}${wcDragOverZoneId === zone.id ? ' drag-over' : ''}`}
+              onDragOver={(e) => handleWcZoneDragOver(e, zone.id)}
+              onDragLeave={handleWcZoneDragLeave}
+              onDrop={(e) => handleWcZoneDrop(e, zone.id)}
+            >
+              <p className="drop-zone-label">{zone.label}</p>
+              <div className="drag-chips">
+                {wcDragWords
+                  .filter((w) => wcPlacements[w.id] === zone.id)
+                  .map((w) => {
+                    const isCorrect = w.answer === zone.id
+                    return (
+                      <div
+                        key={w.id}
+                        className={`drag-chip wc-chip${draggingWcId === w.id ? ' dragging' : ''}${
+                          showWcResults ? (isCorrect ? ' correct-chip' : ' incorrect-chip') : ''
+                        }`}
+                        draggable
+                        onDragStart={(e) => handleWcDragStart(e, w.id)}
+                        onDragEnd={handleWcDragEnd}
+                      >
+                        <span className="drag-chip-word">{w.word}</span>
+                      </div>
+                    )
+                  })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Action buttons */}
+        <div className="drag-actions">
+          <button
+            type="button"
+            className="drag-btn drag-btn--primary"
+            onClick={() => setShowWcResults(true)}
+            disabled={!allWcPlaced}
+          >
+            Check Answers
+          </button>
+          <button
+            type="button"
+            className="drag-btn drag-btn--secondary"
+            onClick={handleWcReset}
+          >
+            Reset
+          </button>
         </div>
       </section>
     </main>
