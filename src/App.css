@@ -256,3 +256,165 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Drag-and-Drop Section ───────────────────────────────────────────── */
+
+.drag-bank {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 16px 0;
+  min-height: 80px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.drag-bank.drag-over {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.drag-bank-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.drag-bank-empty {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  align-self: center;
+}
+
+.drag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 48px;
+}
+
+.drag-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  padding: 10px 14px;
+  cursor: grab;
+  user-select: none;
+  transition: opacity 0.2s, border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.drag-chip:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.drag-chip:active {
+  cursor: grabbing;
+}
+
+.drag-chip.dragging {
+  opacity: 0.4;
+}
+
+.drag-chip.correct-chip {
+  border-color: var(--success);
+  background: #dcfce7;
+}
+
+.drag-chip.incorrect-chip {
+  border-color: var(--danger);
+  background: #fee2e2;
+}
+
+.drag-chip-word {
+  font-weight: 700;
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+.drag-chip-sentence {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.drop-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 120px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.drop-zone--blue.drag-over   { border-color: #3b82f6; background: #dbeafe; border-style: solid; }
+.drop-zone--green.drag-over  { border-color: #22c55e; background: #dcfce7; border-style: solid; }
+.drop-zone--orange.drag-over { border-color: #f97316; background: #ffedd5; border-style: solid; }
+
+.drop-zone-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.drop-zone--blue .drop-zone-label   { color: #1d4ed8; }
+.drop-zone--green .drop-zone-label  { color: #15803d; }
+.drop-zone--orange .drop-zone-label { color: #c2410c; }
+
+.drag-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.drag-btn {
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.drag-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.drag-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.drag-btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.drag-btn--secondary {
+  background: var(--bg);
+  color: var(--text-h);
+  border-color: var(--border);
+}
+
+@media (max-width: 800px) {
+  .drop-zones {
+    grid-template-columns: 1fr;
+  }
+}
