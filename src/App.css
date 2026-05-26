@@ -150,3 +150,109 @@
     display: grid;
   }
 }
+
+/* ── Word Classification & Connector tabs ───────────────────────────── */
+
+.pos-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 18px;
+}
+
+.pos-tab {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-h);
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+/* colour variants */
+.pos-tab--blue.pos-tab--active   { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; }
+.pos-tab--green.pos-tab--active  { background: #dcfce7; border-color: #22c55e; color: #15803d; }
+.pos-tab--orange.pos-tab--active { background: #ffedd5; border-color: #f97316; color: #c2410c; }
+.pos-tab--purple.pos-tab--active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+.pos-tab--teal.pos-tab--active   { background: #ccfbf1; border-color: #14b8a6; color: #0f766e; }
+.pos-tab--red.pos-tab--active    { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+
+.pos-tab:hover:not(.pos-tab--active) {
+  border-color: var(--accent);
+}
+
+.wc-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* ── Example list shared ─────────────────────────────────────────────── */
+
+.example-list {
+  margin: 12px 0 0 18px;
+  padding: 0;
+  color: var(--text-h);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── Connector section ───────────────────────────────────────────────── */
+
+.connector-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--accent-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+}
+
+.connector-tip-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.connector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.connector-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.connector-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  align-self: flex-start;
+}
+
+.connector-rule {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.connector-pattern {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 800px) {
+  .connector-grid,
+  .wc-grid {
+    grid-template-columns: 1fr;
+  }
+}
