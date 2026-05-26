@@ -418,3 +418,57 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Tense Section ───────────────────────────────────────────────────── */
+
+.tense-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.tense-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tense-formula {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.tense-use {
+  color: var(--text-h);
+}
+
+.tense-signal {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tense-signal-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tense-highlight {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-style: normal;
+}
+
+/* ── Word-classification chip (no sub-sentence line needed) ──────────── */
+
+.wc-chip {
+  min-width: 90px;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .tense-grid {
+    grid-template-columns: 1fr;
+  }
+}
