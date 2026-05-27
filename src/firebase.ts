@@ -1,14 +1,13 @@
 import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyANfW8GLwbreQCSmmMkpuyvQq9yUDJUTPI',
-  authDomain: 'gerund-8d8df.firebaseapp.com',
-  databaseURL:
-    'https://gerund-8d8df-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'gerund-8d8df',
-  storageBucket: 'gerund-8d8df.firebasestorage.app',
-  messagingSenderId: '47286038646',
-  appId: '1:47286038646:web:a1a9cb8d6a6f257dc7ef57',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 export const firebaseApp = initializeApp(firebaseConfig)
